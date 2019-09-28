@@ -9,7 +9,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.limitless.api.ApiClient;
 import com.example.limitless.api.ApiInterface;
@@ -36,20 +35,21 @@ public class MyViewModel extends AndroidViewModel {
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         apiInterface.getList().enqueue(new Callback<List<ToDoList>>() {
             @Override
-            public void onResponse(Call<List<ToDoList>> call, Response<List<ToDoList>> response) {
+            public void onResponse(@NonNull Call<List<ToDoList>> call, @NonNull Response<List<ToDoList>> response) {
                 if(response.isSuccessful()){
-                    new SaveData(context,response.body());
+                    new SaveData(context,response.body()).execute();
                 }
             }
 
             @Override
-            public void onFailure(Call<List<ToDoList>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<ToDoList>> call, @NonNull Throwable t) {
 
             }
         });
     }
 
 
+   @SuppressLint("StaticFieldLeak")
    private class SaveData extends AsyncTask<Void,Void,Void>{
         Context context;
         List<ToDoList> lists;
@@ -68,6 +68,7 @@ public class MyViewModel extends AndroidViewModel {
        protected void onPostExecute(Void aVoid) {
            super.onPostExecute(aVoid);
            Log.e("DataBase","Updated");
+            getData();
        }
    }
 
