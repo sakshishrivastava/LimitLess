@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         myViewModel.projectMutableLiveData.observe(this, new Observer<List<ToDoList>>() {
             @Override
             public void onChanged(List<ToDoList> lists) {
-               //textView.setText(lists.get(0).getAlpha2Code().toString());
+               textView.setText(""+lists.size());
             }
         });
     }
