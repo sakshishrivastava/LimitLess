@@ -14,7 +14,10 @@ public class RegionalBloc {
     private String name;
     @SerializedName("otherAcronyms")
     @Expose
+    //@TypeConverters(StringTypeConverter.class)
     private List<String> otherAcronyms = null;
+
+    //@TypeConverters(StringTypeConverter.class)
     @SerializedName("otherNames")
     @Expose
     private List<String> otherNames = null;

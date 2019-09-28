@@ -1,25 +1,28 @@
 package com.example.limitless.model;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverter;
-import android.arch.persistence.room.TypeConverters;
+
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import com.example.limitless.database.DoubleTypeConverter;
-import com.example.limitless.database.NestedTypeConverter;
 import com.example.limitless.database.StringTypeConverter;
+import com.example.limitless.database.typeconverter.CurrencyTypeConverter;
+import com.example.limitless.database.typeconverter.LanguageTypeConverter;
+import com.example.limitless.database.typeconverter.ReginalBlocTypeConverter;
+import com.example.limitless.database.typeconverter.TranslationTypeConverter;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 @Entity(tableName = "CountryDetails")
-@TypeConverters(NestedTypeConverter.class)
 public class ToDoList {
+    @PrimaryKey(autoGenerate = true)
+    public int id;
     @SerializedName("name")
     @Expose
-    @PrimaryKey
     @ColumnInfo(name = "name")
     private String name;
     @SerializedName("topLevelDomain")
@@ -98,17 +101,18 @@ public class ToDoList {
     private String numericCode;
     @SerializedName("currencies")
     @Expose
-    @TypeConverters(NestedTypeConverter.class)
+    @TypeConverters(CurrencyTypeConverter.class)
     @ColumnInfo(name = "currencies")
     private List<Currency> currencies = null;
     @SerializedName("languages")
     @Expose
-    @TypeConverters(NestedTypeConverter.class)
+    @TypeConverters(LanguageTypeConverter.class)
     @ColumnInfo(name = "languages")
     private List<Language> languages = null;
     @SerializedName("translations")
     @Expose
     @ColumnInfo(name = "transltions")
+    @TypeConverters(TranslationTypeConverter.class)
     private Translations translations;
     @SerializedName("flag")
     @Expose
@@ -116,7 +120,7 @@ public class ToDoList {
     private String flag;
     @SerializedName("regionalBlocs")
     @Expose
-    @TypeConverters(NestedTypeConverter.class)
+    @TypeConverters(ReginalBlocTypeConverter.class)
     @ColumnInfo(name = "regionalBlocs")
     private List<RegionalBloc> regionalBlocs = null;
     @SerializedName("cioc")

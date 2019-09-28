@@ -1,5 +1,6 @@
 package com.example.limitless.viewmodel;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -73,6 +74,7 @@ public class MyViewModel extends AndroidViewModel {
   public void getData()
 
     {
+         @SuppressLint("StaticFieldLeak")
          class QueryData extends AsyncTask<Void, Void, List<ToDoList>> {
             List<ToDoList> lists;
 
