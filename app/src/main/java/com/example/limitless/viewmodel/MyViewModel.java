@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.limitless.MyAdapter;
 import com.example.limitless.api.ApiClient;
 import com.example.limitless.api.ApiInterface;
 import com.example.limitless.database.AppDatabase;
@@ -25,6 +26,8 @@ public class MyViewModel extends AndroidViewModel {
     private final String TAG = getClass().getSimpleName();
     public MutableLiveData<List<ToDoList>> projectMutableLiveData = new MutableLiveData<>();
     private Context context;
+   public static boolean isEmpty;
+   MyAdapter myAdapter =new MyAdapter(this);
 
     public MyViewModel(@NonNull Application application) {
         super(application);
@@ -77,7 +80,7 @@ public class MyViewModel extends AndroidViewModel {
     {
          @SuppressLint("StaticFieldLeak")
          class QueryData extends AsyncTask<Void, Void, List<ToDoList>> {
-            List<ToDoList> lists;
+            List<ToDoList> lists = null;
 
             @Override
             protected List<ToDoList> doInBackground(Void... voids) {
@@ -88,9 +91,46 @@ public class MyViewModel extends AndroidViewModel {
             @Override
             protected void onPostExecute(List<ToDoList> lists) {
                 super.onPostExecute(lists);
+                if(lists.size()>0) {
+                    isEmpty = false;
+                    Log.e(TAG,"DataBaseNotEmpty");
+                }
+                else {
+                    Log.e(TAG,"DataBaseEmpty");
+                    isEmpty = true;
+                }
                 projectMutableLiveData.setValue(lists);
+
             }
         }
         new QueryData().execute();
     }
+
+   public boolean checkDataBase(){
+
+        class CheckDataBaseIsEmpty extends AsyncTask<Void, Void, List<ToDoList>>{
+            List<ToDoList> lists;
+            @Override
+            protected List<ToDoList> doInBackground(Void... voids) {
+                lists = AppDatabase.getInstance(context).myDao().getAllDetails();
+                return lists;
+            }
+
+            @Override
+            protected void onPostExecute(List<ToDoList> lists) {
+                super.onPostExecute(lists);
+                if(lists.size()>0){
+                    isEmpty = false;
+                }
+            }
+        }
+        return isEmpty;
+    }
+
+    public void setAdapter(List<ToDoList> lists){
+      this.myAdapter.setLists(lists);
+      this.myAdapter.notifyDataSetChanged();
+    }
+
+
 }
