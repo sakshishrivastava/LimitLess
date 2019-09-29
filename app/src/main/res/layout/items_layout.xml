@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-<data>
-    <variable
-        name="viewModel"
-        type="com.example.limitless.viewmodel.MyViewModel" />
-</data>
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.example.limitless.model.ToDoList" />
+    </data>
+
     <RelativeLayout
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_16dp">
+
         <TextView
+            android:text="@{`Name - ` + model.name}"
+            android:id="@+id/countryName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/countryName"
             android:layout_marginLeft="@dimen/dimen_16dp"
-            android:textSize="@dimen/dimen_16sp"/>
+            android:textSize="@dimen/dimen_16sp" />
     </RelativeLayout>
 </layout>

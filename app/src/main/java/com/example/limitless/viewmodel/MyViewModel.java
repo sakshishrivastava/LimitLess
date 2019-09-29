@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.limitless.MyAdapter;
 import com.example.limitless.api.ApiClient;
 import com.example.limitless.api.ApiInterface;
 import com.example.limitless.database.AppDatabase;
@@ -27,8 +26,6 @@ public class MyViewModel extends AndroidViewModel {
     public MutableLiveData<List<ToDoList>> projectMutableLiveData = new MutableLiveData<>();
     private Context context;
    public static boolean isEmpty;
-   MyAdapter myAdapter =new MyAdapter(this);
-
     public MyViewModel(@NonNull Application application) {
         super(application);
         context = application.getApplicationContext();
@@ -126,11 +123,5 @@ public class MyViewModel extends AndroidViewModel {
         }
         return isEmpty;
     }
-
-    public void setAdapter(List<ToDoList> lists){
-      this.myAdapter.setLists(lists);
-      this.myAdapter.notifyDataSetChanged();
-    }
-
 
 }
